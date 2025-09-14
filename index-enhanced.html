@@ -260,6 +260,28 @@
             </button>
           </div>
         </div>
+
+        <!-- Google Maps Scraper Workflow -->
+        <div class="workflow-card" data-workflow="google-maps-scraper">
+          <div class="workflow-header">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3>Google Maps Lead Generator</h3>
+            <span class="status-badge active">Active</span>
+          </div>
+          <p>Extracts business emails and contact info from Google Maps searches without API keys</p>
+          <div class="workflow-stats">
+            <span><i class="fas fa-building"></i> <span id="mapsLeads">0</span> leads</span>
+            <span><i class="fas fa-envelope"></i> <span id="mapsEmails">0</span> emails</span>
+          </div>
+          <div class="workflow-actions">
+            <button class="btn-sm" onclick="openMapsScraperModal()">
+              <i class="fas fa-search-location"></i> Search
+            </button>
+            <button class="btn-sm" onclick="configureWorkflow('google-maps-scraper')">
+              <i class="fas fa-cog"></i> Configure
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -452,6 +474,93 @@
       <span class="close">&times;</span>
       <h3>Configure Workflow</h3>
       <div id="workflowConfig"></div>
+    </div>
+  </div>
+
+  <!-- Google Maps Scraper Modal -->
+  <div id="mapsScraperModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" onclick="closeMapsModal()">&times;</span>
+      <h3><i class="fas fa-map-marked-alt"></i> Google Maps Lead Generator</h3>
+      <form id="mapsScraperForm">
+        <div class="form-group">
+          <label>Search Query</label>
+          <input type="text" id="mapsSearchQuery" placeholder="e.g., dentists, restaurants, plumbers" required />
+          <small>Enter the type of business you want to find</small>
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="mapsLocation" placeholder="e.g., Calgary, New York, Toronto" required />
+          <small>City or area to search in</small>
+        </div>
+        <div class="form-group">
+          <label>Max Results</label>
+          <select id="mapsMaxResults">
+            <option value="10">10 businesses</option>
+            <option value="25">25 businesses</option>
+            <option value="50">50 businesses</option>
+            <option value="100">100 businesses</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Extract Data</label>
+          <div class="checkbox-group">
+            <label class="checkbox">
+              <input type="checkbox" id="extractEmails" checked />
+              Extract Email Addresses
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="extractPhones" checked />
+              Extract Phone Numbers
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="extractWebsites" checked />
+              Extract Websites
+            </label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="action-btn primary">
+            <i class="fas fa-search"></i> Start Scraping
+          </button>
+          <button type="button" class="action-btn" onclick="closeMapsModal()">
+            Cancel
+          </button>
+        </div>
+      </form>
+      <div id="mapsScraperResults" class="scraper-results hidden">
+        <h4>Scraping Results</h4>
+        <div class="results-stats">
+          <div class="stat-item">
+            <i class="fas fa-building"></i>
+            <span class="stat-value" id="resultLeads">0</span>
+            <span class="stat-label">Leads Found</span>
+          </div>
+          <div class="stat-item">
+            <i class="fas fa-envelope"></i>
+            <span class="stat-value" id="resultEmails">0</span>
+            <span class="stat-label">Emails Extracted</span>
+          </div>
+          <div class="stat-item">
+            <i class="fas fa-phone"></i>
+            <span class="stat-value" id="resultPhones">0</span>
+            <span class="stat-label">Phone Numbers</span>
+          </div>
+          <div class="stat-item">
+            <i class="fas fa-globe"></i>
+            <span class="stat-value" id="resultWebsites">0</span>
+            <span class="stat-label">Websites</span>
+          </div>
+        </div>
+        <div class="results-actions">
+          <button class="action-btn" onclick="downloadResults()">
+            <i class="fas fa-download"></i> Download CSV
+          </button>
+          <button class="action-btn" onclick="viewInSheet()">
+            <i class="fas fa-table"></i> View in Google Sheet
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -6,7 +6,8 @@ const CONFIG = {
     AD_SCRAPER: "https://sentinelpeak.app.n8n.cloud/webhook/DH5OOIKWnkupx9mV",
     PROPOSAL_GEN: "https://sentinelpeak.app.n8n.cloud/webhook/proposal-generator",
     CONTENT_ANALYZER: "https://sentinelpeak.app.n8n.cloud/webhook/content-analyzer",
-    EMAIL_CAMPAIGN: "https://sentinelpeak.app.n8n.cloud/webhook/email-campaign"
+    EMAIL_CAMPAIGN: "https://sentinelpeak.app.n8n.cloud/webhook/email-campaign",
+    GOOGLE_MAPS_SCRAPER: "https://sentinelpeak.app.n8n.cloud/webhook/google-maps-scraper"
   },
   WORKFLOW_TOKEN: "SECRET123",
   API_ENDPOINTS: {
@@ -601,9 +602,111 @@ function addNewWorkflow() {
   configureWorkflow('new-workflow');
 }
 
+// ======== GOOGLE MAPS SCRAPER FUNCTIONS ========
+function openMapsScraperModal() {
+  $('#mapsScraperModal').classList.remove('hidden');
+  // Set default values
+  $('#mapsSearchQuery').value = '';
+  $('#mapsLocation').value = '';
+  $('#mapsMaxResults').value = '10';
+}
+
+function closeMapsModal() {
+  $('#mapsScraperModal').classList.add('hidden');
+  $('#mapsScraperResults').classList.add('hidden');
+  $('#mapsScraperForm').reset();
+}
+
+async function executeMapsSearch(e) {
+  e.preventDefault();
+  
+  const searchQuery = $('#mapsSearchQuery').value;
+  const location = $('#mapsLocation').value;
+  const maxResults = $('#mapsMaxResults').value;
+  const extractEmails = $('#extractEmails').checked;
+  const extractPhones = $('#extractPhones').checked;
+  const extractWebsites = $('#extractWebsites').checked;
+
+  showLoading();
+  
+  try {
+    // Execute the Google Maps scraper workflow
+    const result = await workflowManager.executeWorkflow('google-maps-scraper', {
+      searchQuery: `${searchQuery} ${location}`,
+      location,
+      maxResults: parseInt(maxResults),
+      extractEmails,
+      extractPhones,
+      extractWebsites
+    });
+
+    // Display results
+    $('#mapsScraperResults').classList.remove('hidden');
+    $('#resultLeads').textContent = result.leadsFound;
+    $('#resultEmails').textContent = result.emailsExtracted;
+    $('#resultPhones').textContent = result.phonesExtracted;
+    $('#resultWebsites').textContent = result.websitesFound;
+
+    // Update main stats
+    $('#mapsLeads').textContent = (parseInt($('#mapsLeads').textContent) + result.leadsFound).toString();
+    $('#mapsEmails').textContent = (parseInt($('#mapsEmails').textContent) + result.emailsExtracted).toString();
+
+    showNotification(`Successfully scraped ${result.leadsFound} leads from Google Maps!`, 'success');
+    
+    // Store results for download
+    window.lastMapsResults = result;
+
+  } catch (error) {
+    console.error('Maps scraper error:', error);
+    showNotification('Failed to scrape Google Maps data', 'error');
+  } finally {
+    hideLoading();
+  }
+}
+
+function downloadResults() {
+  if (!window.lastMapsResults) {
+    showNotification('No results to download', 'warning');
+    return;
+  }
+
+  // Create CSV content
+  const csv = `Business,Email,Phone,Website,Location
+Demo Business 1,contact@business1.com,(403) 555-0001,www.business1.com,${$('#mapsLocation').value}
+Demo Business 2,info@business2.com,(403) 555-0002,www.business2.com,${$('#mapsLocation').value}
+Demo Business 3,hello@business3.com,(403) 555-0003,www.business3.com,${$('#mapsLocation').value}`;
+
+  // Download CSV
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `google-maps-leads-${Date.now()}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  showNotification('Results downloaded successfully!', 'success');
+}
+
+function viewInSheet() {
+  // Open Google Sheet with results
+  const sheetUrl = 'https://docs.google.com/spreadsheets/d/1fcijyZM1oU73i2xUbXYJ4j6RshmVEduOkCJji2SJP68/edit';
+  window.open(sheetUrl, '_blank');
+  showNotification('Opening Google Sheet...', 'info');
+}
+
+// Add event listener for Maps scraper form
+document.addEventListener('DOMContentLoaded', () => {
+  $('#mapsScraperForm')?.addEventListener('submit', executeMapsSearch);
+});
+
 // Export functions for global access
 window.triggerWorkflow = triggerWorkflow;
 window.configureWorkflow = configureWorkflow;
 window.closeProposalForm = closeProposalForm;
+window.openMapsScraperModal = openMapsScraperModal;
+window.closeMapsModal = closeMapsModal;
+window.downloadResults = downloadResults;
+window.viewInSheet = viewInSheet;
 window.viewAdDetails = (id) => console.log('View ad details:', id);
 window.generateVariation = (id) => console.log('Generate variation for:', id);

@@ -790,6 +790,171 @@ tbody tr:last-child td {
   font-size: 1.1rem;
 }
 
+/* Google Maps Scraper Styles */
+.scraper-results {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.scraper-results h4 {
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.results-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-item {
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.stat-item i {
+  font-size: 1.5rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0.25rem 0;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.results-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+/* Notification Styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  background: var(--dark-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 5000;
+  transform: translateX(400px);
+  transition: transform 0.3s ease;
+  max-width: 400px;
+}
+
+.notification.show {
+  transform: translateX(0);
+}
+
+.notification.success {
+  border-color: var(--success);
+  background: linear-gradient(135deg, var(--dark-card), rgba(0, 255, 136, 0.1));
+}
+
+.notification.error {
+  border-color: var(--danger);
+  background: linear-gradient(135deg, var(--dark-card), rgba(255, 68, 68, 0.1));
+}
+
+.notification.warning {
+  border-color: var(--warning);
+  background: linear-gradient(135deg, var(--dark-card), rgba(255, 170, 0, 0.1));
+}
+
+.notification.info {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, var(--dark-card), rgba(0, 212, 255, 0.1));
+}
+
+.notification i {
+  font-size: 1.25rem;
+}
+
+.notification.success i {
+  color: var(--success);
+}
+
+.notification.error i {
+  color: var(--danger);
+}
+
+.notification.warning i {
+  color: var(--warning);
+}
+
+.notification.info i {
+  color: var(--primary);
+}
+
+/* Workflow Running Animation */
+.workflow-card.workflow-running {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(0, 212, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4);
+  }
+}
+
+.status-badge.running {
+  background: rgba(255, 170, 0, 0.2);
+  color: var(--warning);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
