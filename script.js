@@ -3,14 +3,14 @@
 // 2) Set SHEET_ID below. Optionally, set SHEET_GID (numeric gid for the tab; default 0).
 // 3) If your workflow supports a webhook trigger, set WORKFLOW_WEBHOOK_URL and WORKFLOW_TOKEN (if used).
 
-const SHEET_ID = "YOUR_SHEET_ID_HERE";
+const SHEET_ID = "1YJKGA-TRxxltTFXMejBTgobT-9zTRPJlxYHFUjZ35O8RE";
 const SHEET_GID = "0"; // The first tab is usually gid=0
 
 // Google Visualization API JSON endpoint (works for published sheets)
 const SHEET_JSON_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}&tqx=out:json&tq=${encodeURIComponent("select *")}`;
 
 // Optional webhook to trigger your scrape
-const WORKFLOW_WEBHOOK_URL = "https://.../webhook/your-path"; // e.g., n8n/apify webhook
+const WORKFLOW_WEBHOOK_URL = "https://sentinelpeak.app.n8n.cloud/workflow/DH5OOIKWnkupx9mV"; // e.g., n8n/apify webhook
 const WORKFLOW_TOKEN = "SECRET123"; // Optional: e.g., ?key=SECRET or header-based token
 
 // ======== UTILITIES ========
