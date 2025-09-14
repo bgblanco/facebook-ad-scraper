@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sentinel Peak Solutions - Marketing Intelligence Hub</title>
+  <link rel="stylesheet" href="styles-enhanced.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <img src="sps-logo.png" alt="Sentinel Peak Solutions" class="nav-logo" />
+        <div class="brand-text">
+          <h1>Marketing Intelligence Hub</h1>
+          <p class="tagline">Data-Driven Marketing Solutions</p>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-btn" data-section="dashboard">
+          <i class="fas fa-chart-line"></i> Dashboard
+        </button>
+        <button class="nav-btn" data-section="competitors">
+          <i class="fas fa-eye"></i> Competitors
+        </button>
+        <button class="nav-btn" data-section="workflows">
+          <i class="fas fa-project-diagram"></i> Workflows
+        </button>
+        <button class="nav-btn" data-section="proposals">
+          <i class="fas fa-file-contract"></i> Proposals
+        </button>
+        <button class="nav-btn" data-section="clients">
+          <i class="fas fa-users"></i> Clients
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Section -->
+  <section id="dashboard" class="content-section active">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="fas fa-chart-line"></i> Marketing Intelligence Dashboard</h2>
+        <p>Real-time insights from competitor analysis and viral content tracking</p>
+      </div>
+      
+      <!-- Key Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <i class="fas fa-ad"></i>
+          <div class="metric-content">
+            <h3 id="totalAds">0</h3>
+            <p>Ads Tracked</p>
+          </div>
+        </div>
+        <div class="metric-card">
+          <i class="fas fa-fire"></i>
+          <div class="metric-content">
+            <h3 id="viralContent">0</h3>
+            <p>Viral Posts</p>
+          </div>
+        </div>
+        <div class="metric-card">
+          <i class="fas fa-trophy"></i>
+          <div class="metric-content">
+            <h3 id="topCompetitors">0</h3>
+            <p>Competitors</p>
+          </div>
+        </div>
+        <div class="metric-card">
+          <i class="fas fa-robot"></i>
+          <div class="metric-content">
+            <h3 id="aiInsights">0</h3>
+            <p>AI Insights</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Chart -->
+      <div class="chart-container">
+        <h3>Campaign Performance Trends</h3>
+        <canvas id="performanceChart"></canvas>
+      </div>
+
+      <!-- AI Insights Panel -->
+      <div class="insights-panel">
+        <h3><i class="fas fa-brain"></i> AI-Generated Marketing Insights</h3>
+        <div id="aiInsightsContent" class="insights-content">
+          <div class="insight-item">
+            <span class="insight-badge">Trending</span>
+            <p>Video content with emotional storytelling showing 3x higher engagement</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-badge">Opportunity</span>
+            <p>Competitors focusing on LinkedIn - Instagram Stories underutilized</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-badge">Strategy</span>
+            <p>User-generated content campaigns driving 45% better conversion rates</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Competitors Section -->
+  <section id="competitors" class="content-section">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="fas fa-eye"></i> Competitor Ad Tracking</h2>
+        <div class="header-actions">
+          <button id="runScrapeBtn" class="action-btn primary">
+            <i class="fas fa-sync"></i> Run Scraper
+          </button>
+          <button id="exportDataBtn" class="action-btn">
+            <i class="fas fa-download"></i> Export Data
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-bar">
+        <input id="searchAds" type="search" placeholder="Search ads, copy, prompts..." />
+        <select id="platformFilter">
+          <option value="">All Platforms</option>
+          <option value="facebook">Facebook</option>
+          <option value="instagram">Instagram</option>
+          <option value="linkedin">LinkedIn</option>
+          <option value="tiktok">TikTok</option>
+        </select>
+        <select id="industryFilter">
+          <option value="">All Industries</option>
+          <option value="tech">Technology</option>
+          <option value="retail">Retail</option>
+          <option value="finance">Finance</option>
+          <option value="health">Healthcare</option>
+        </select>
+        <button id="refreshAds" class="action-btn">
+          <i class="fas fa-refresh"></i> Refresh
+        </button>
+      </div>
+
+      <!-- Ads Table -->
+      <div class="table-container">
+        <table id="competitorAdsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Competitor</th>
+              <th>Platform</th>
+              <th>Ad Summary</th>
+              <th>Engagement</th>
+              <th>Our Version</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workflows Section -->
+  <section id="workflows" class="content-section">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="fas fa-project-diagram"></i> Marketing Automation Workflows</h2>
+        <button id="addWorkflowBtn" class="action-btn primary">
+          <i class="fas fa-plus"></i> Add Workflow
+        </button>
+      </div>
+
+      <div class="workflows-grid">
+        <!-- Ad Scraper Workflow -->
+        <div class="workflow-card">
+          <div class="workflow-header">
+            <i class="fas fa-spider"></i>
+            <h3>Ad Scraper</h3>
+            <span class="status-badge active">Active</span>
+          </div>
+          <p>Automatically scrapes competitor ads from Facebook Ad Library and other sources</p>
+          <div class="workflow-stats">
+            <span><i class="fas fa-clock"></i> Every 6 hours</span>
+            <span><i class="fas fa-database"></i> 1,247 ads collected</span>
+          </div>
+          <div class="workflow-actions">
+            <button class="btn-sm" onclick="triggerWorkflow('ad-scraper')">
+              <i class="fas fa-play"></i> Run Now
+            </button>
+            <button class="btn-sm" onclick="configureWorkflow('ad-scraper')">
+              <i class="fas fa-cog"></i> Configure
+            </button>
+          </div>
+        </div>
+
+        <!-- Proposal Generator Workflow -->
+        <div class="workflow-card">
+          <div class="workflow-header">
+            <i class="fas fa-file-invoice"></i>
+            <h3>AI Proposal Generator</h3>
+            <span class="status-badge active">Active</span>
+          </div>
+          <p>GPT-4 powered proposal generation with data-driven insights and competitive analysis</p>
+          <div class="workflow-stats">
+            <span><i class="fas fa-robot"></i> GPT-4 Enhanced</span>
+            <span><i class="fas fa-chart-line"></i> 87% win rate</span>
+          </div>
+          <div class="workflow-actions">
+            <button class="btn-sm" onclick="triggerWorkflow('proposal-gen')">
+              <i class="fas fa-magic"></i> Generate
+            </button>
+            <button class="btn-sm" onclick="configureWorkflow('proposal-gen')">
+              <i class="fas fa-cog"></i> Configure
+            </button>
+          </div>
+        </div>
+
+        <!-- Content Analyzer Workflow -->
+        <div class="workflow-card">
+          <div class="workflow-header">
+            <i class="fas fa-analytics"></i>
+            <h3>Viral Content Analyzer</h3>
+            <span class="status-badge active">Active</span>
+          </div>
+          <p>Analyzes viral content patterns and generates recommendations for client campaigns</p>
+          <div class="workflow-stats">
+            <span><i class="fas fa-fire"></i> 523 viral posts</span>
+            <span><i class="fas fa-lightbulb"></i> 156 insights</span>
+          </div>
+          <div class="workflow-actions">
+            <button class="btn-sm" onclick="triggerWorkflow('content-analyzer')">
+              <i class="fas fa-search"></i> Analyze
+            </button>
+            <button class="btn-sm" onclick="configureWorkflow('content-analyzer')">
+              <i class="fas fa-cog"></i> Configure
+            </button>
+          </div>
+        </div>
+
+        <!-- Email Campaign Workflow -->
+        <div class="workflow-card">
+          <div class="workflow-header">
+            <i class="fas fa-envelope"></i>
+            <h3>Email Campaign Builder</h3>
+            <span class="status-badge">Paused</span>
+          </div>
+          <p>Creates personalized email campaigns based on competitor analysis and market trends</p>
+          <div class="workflow-stats">
+            <span><i class="fas fa-percentage"></i> 34% open rate</span>
+            <span><i class="fas fa-mouse-pointer"></i> 12% CTR</span>
+          </div>
+          <div class="workflow-actions">
+            <button class="btn-sm" onclick="triggerWorkflow('email-campaign')">
+              <i class="fas fa-play"></i> Activate
+            </button>
+            <button class="btn-sm" onclick="configureWorkflow('email-campaign')">
+              <i class="fas fa-cog"></i> Configure
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proposals Section -->
+  <section id="proposals" class="content-section">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="fas fa-file-contract"></i> AI-Powered Proposals</h2>
+        <button id="newProposalBtn" class="action-btn primary">
+          <i class="fas fa-plus"></i> New Proposal
+        </button>
+      </div>
+
+      <!-- Proposal Generator Form -->
+      <div id="proposalForm" class="proposal-form hidden">
+        <h3>Generate Data-Driven Proposal</h3>
+        <form id="proposalGenerator">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Client Name</label>
+              <input type="text" id="clientName" required />
+            </div>
+            <div class="form-group">
+              <label>Industry</label>
+              <select id="clientIndustry" required>
+                <option value="">Select Industry</option>
+                <option value="tech">Technology</option>
+                <option value="retail">Retail/E-commerce</option>
+                <option value="finance">Finance/Banking</option>
+                <option value="health">Healthcare</option>
+                <option value="realestate">Real Estate</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Business Description</label>
+              <textarea id="businessDesc" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <label>Current Challenge</label>
+              <textarea id="clientProblem" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <label>Proposed Solution</label>
+              <textarea id="proposedSolution" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <label>Budget Range</label>
+              <select id="budgetRange" required>
+                <option value="">Select Budget</option>
+                <option value="5000-10000">$5,000 - $10,000</option>
+                <option value="10000-25000">$10,000 - $25,000</option>
+                <option value="25000-50000">$25,000 - $50,000</option>
+                <option value="50000+">$50,000+</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Competitive Insights -->
+          <div class="competitive-insights">
+            <h4>Include Competitive Intelligence</h4>
+            <label class="checkbox">
+              <input type="checkbox" id="includeCompAnalysis" checked />
+              Include competitor analysis from our database
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="includeViralTrends" checked />
+              Include viral content trends and recommendations
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" id="includeAIInsights" checked />
+              Include AI-generated strategic insights
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="action-btn primary">
+              <i class="fas fa-magic"></i> Generate Proposal
+            </button>
+            <button type="button" class="action-btn" onclick="closeProposalForm()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Recent Proposals -->
+      <div class="proposals-grid">
+        <div class="proposal-card">
+          <div class="proposal-header">
+            <h4>TechStart Inc.</h4>
+            <span class="status-badge sent">Sent</span>
+          </div>
+          <p>Social media marketing strategy with focus on LinkedIn and Twitter growth</p>
+          <div class="proposal-meta">
+            <span><i class="fas fa-calendar"></i> Dec 10, 2024</span>
+            <span><i class="fas fa-dollar-sign"></i> $15,000</span>
+          </div>
+          <div class="proposal-actions">
+            <button class="btn-sm"><i class="fas fa-eye"></i> View</button>
+            <button class="btn-sm"><i class="fas fa-edit"></i> Edit</button>
+          </div>
+        </div>
+
+        <div class="proposal-card">
+          <div class="proposal-header">
+            <h4>HealthPlus Wellness</h4>
+            <span class="status-badge won">Won</span>
+          </div>
+          <p>Content marketing campaign targeting health-conscious millennials</p>
+          <div class="proposal-meta">
+            <span><i class="fas fa-calendar"></i> Dec 8, 2024</span>
+            <span><i class="fas fa-dollar-sign"></i> $22,500</span>
+          </div>
+          <div class="proposal-actions">
+            <button class="btn-sm"><i class="fas fa-eye"></i> View</button>
+            <button class="btn-sm"><i class="fas fa-copy"></i> Duplicate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients Section -->
+  <section id="clients" class="content-section">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="fas fa-users"></i> Client Portal</h2>
+        <button class="action-btn primary">
+          <i class="fas fa-user-plus"></i> Add Client
+        </button>
+      </div>
+
+      <!-- Client Dashboard Preview -->
+      <div class="client-preview">
+        <h3>Client View Preview</h3>
+        <p>This is what your clients see when they access their dashboard:</p>
+        
+        <div class="client-dashboard">
+          <div class="client-metrics">
+            <div class="client-metric">
+              <i class="fas fa-chart-line"></i>
+              <div>
+                <h4>Campaign Performance</h4>
+                <p>+247% engagement this month</p>
+              </div>
+            </div>
+            <div class="client-metric">
+              <i class="fas fa-users"></i>
+              <div>
+                <h4>Audience Growth</h4>
+                <p>12.5K new followers</p>
+              </div>
+            </div>
+            <div class="client-metric">
+              <i class="fas fa-bullhorn"></i>
+              <div>
+                <h4>Active Campaigns</h4>
+                <p>5 campaigns running</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Competitive Advantage Display -->
+          <div class="competitive-advantage">
+            <h4>Your Competitive Edge</h4>
+            <div class="advantage-cards">
+              <div class="advantage-card">
+                <i class="fas fa-trophy"></i>
+                <p>Outperforming 87% of competitors in your industry</p>
+              </div>
+              <div class="advantage-card">
+                <i class="fas fa-rocket"></i>
+                <p>3x faster growth than industry average</p>
+              </div>
+              <div class="advantage-card">
+                <i class="fas fa-brain"></i>
+                <p>AI-optimized content strategy in place</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workflow Configuration Modal -->
+  <div id="workflowModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Configure Workflow</h3>
+      <div id="workflowConfig"></div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="spinner"></div>
+    <p>Processing with AI...</p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script-enhanced.js"></script>
+  <script src="workflows.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
